@@ -8,6 +8,8 @@ Proveniência e Autoria: Este documento integra o projeto Prometheus (licença M
 
 ---
 
+Só testando o app...
+
 O Prometheus não é:
 
 Um software de automação ou uma ferramenta ligada a inteligência artificial.
