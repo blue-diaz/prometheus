@@ -6,6 +6,24 @@ Proveniência e Autoria: Este documento integra o projeto Prometheus (licença M
 
 **CLI modular para análise, diagnóstico e manutenção de projetos JavaScript/TypeScript com suporte multi-linguagem**
 
+---
+
+O Prometheus não é:
+
+Um software de automação ou uma ferramenta ligada a inteligência artificial.
+
+O que ele é:
+
+Um linter de análise estática;
+Focado em segurança e otimização de código (JavaScript/TypeScript);
+Inclui alguns comandos quebra galhos para o dia a dia.
+
+Recursos adicionais:
+
+Traduções estáticas (apenas para inglês, japonês e chinês).
+
+---
+
 [![npm version](https://img.shields.io/npm/v/prometheus.svg)](https://www.npmjs.com/package/prometheus)
 [![Node](https://img.shields.io/badge/node-%3E%3D24.16.0-brightgreen)](package.json)
 [![License](https://img.shields.io/badge/license-MIT--0-blue)](LICENSE)
