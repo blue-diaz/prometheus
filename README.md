@@ -22,6 +22,8 @@ Recursos adicionais:
 
 Traduções estáticas (apenas para inglês, japonês e chinês).
 
+**As traduções pra japones e chines estão com problemas, a pra ingles parece ta funcionando blz. estou focando em outras coisas agora, vou deixar o projeto assim por enquanto porque tenho outras coisas pra fazer, depois eu arrumo tudo direitinho.**
+
 ---
 
 [![npm version](https://img.shields.io/npm/v/prometheus.svg)](https://www.npmjs.com/package/prometheus)
