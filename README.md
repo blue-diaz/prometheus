@@ -37,7 +37,7 @@ Traduções estáticas (apenas para inglês, japonês e chinês).
 _Esse video esta mal gravado mas o prometheus funciona mais ou menos assim. leia a documentação. depois eu gravo um direito._
 
 <p align="center">
-  <video src="videos/video.mp4" width="80%" controls></video>
+  <video src="./videos/video.mp4" width="80%" controls></video>
 </p>
 
 </div>
