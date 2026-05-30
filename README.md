@@ -1,26 +1,12 @@
-<div align="center">
-
-# Prometheus
-
+---
 Proveniência e Autoria: Este documento integra o projeto Prometheus (licença MIT-0).
-
-**CLI modular para análise, diagnóstico e manutenção de projetos JavaScript/TypeScript com suporte multi-linguagem**
+---
 
 ---
 
-O Prometheus não é:
+<div align="center">
 
-Um software de automação ou uma ferramenta ligada a inteligência artificial.
-
-O que ele é:
-
-Um linter de análise estática;
-Focado em segurança e otimização de código (JavaScript/TypeScript);
-Inclui alguns comandos quebra galhos para o dia a dia.
-
-Recursos adicionais:
-
-Traduções estáticas (apenas para inglês, japonês e chinês).
+<img src="./svg/banner-prometheus.svg" width="100%">
 
 ---
 
@@ -30,17 +16,11 @@ Traduções estáticas (apenas para inglês, japonês e chinês).
 [![TypeScript](https://img.shields.io/badge/TypeScript-6.0+-3178C6)](tsconfig.json)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen)](CONTRIBUTING.md)
 
-</div>
+---
 
-<div align="center">
-
-_Esse video esta mal gravado mas o prometheus funciona mais ou menos assim. leia a documentação. depois eu gravo um direito._
+<p><b>CLI modular para análise, diagnóstico e manutenção de projetos JavaScript/TypeScript com suporte multi-linguagem</b><p>
 
 </div>
-
-<p align="center">
-  <video src="./videos/video.mp4" width="80%" controls></video>
-</p>
 
 ---
 
@@ -744,3 +724,5 @@ Dependências de terceiros listadas em [THIRD-PARTY-NOTICES.txt](./THIRD-PARTY-N
 **Feito para os iniciantes** — [Voltar ao topo](#prometheus)
 
 </div>
+# prometeus
+
