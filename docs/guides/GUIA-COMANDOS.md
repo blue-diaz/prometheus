@@ -2,11 +2,10 @@
 Proveniência e Autoria: Este documento integra o projeto Prometheus (licença MIT-0).
 ---
 
-# Referência de Comandos - Prometheus
 
-Referência completa de todos os comandos expostos pela CLI do Prometheus v0.8.0.
+# Guia de Comandos
 
----
+Este guia documenta os comandos efetivamente expostos pela CLI atual do Prometheus.
 
 ## Visão Geral
 
@@ -14,129 +13,97 @@ Referência completa de todos os comandos expostos pela CLI do Prometheus v0.8.0
 prometheus --help
 ```
 
-### Lista de Comandos
+Comandos disponíveis:
 
-| Comando | Alias | Descrição |
-|---|---|---|
-| `diagnosticar` | `diag` | Análise completa do repositório |
-| `guardian` | — | Baseline e verificação de integridade |
-| `formatar` | — | Formatação interna do projeto |
-| `otimizar-svg` | — | Otimização de arquivos SVG |
-| `podar` | — | Remoção de arquivos órfãos e lixo |
-| `barrels` | — | Geração e organização de barrels (index.ts) |
-| `atualizar` | — | Atualização segura do Prometheus |
-| `analistas` | — | Lista analistas registrados |
-| `metricas` | — | Histórico de métricas de execução |
-| `fix-types` | — | Detecta e corrige `any` e `unknown` |
-| `licencas` | — | Scan de licenças de dependências |
-| `names` | — | Gera mapeamento de nomes de variáveis |
-| `rename` | — | Aplica renomeações em massa |
-| `reverter` | — | Gerencia mapa de reversão de moves |
-| `perf` | — | Baseline e comparação de performance |
-| `marketplace` | — | Gerencia analistas do Marketplace (search, install, remove, list, info, publish) |
-
----
+- `diagnosticar|diag`
+- `guardian`
+- `formatar`
+- `otimizar-svg`
+- `podar`
+- `reestruturar`
+- `atualizar`
+- `analistas`
+- `metricas`
+- `fix-types`
+- `licencas`
+- `names`
+- `rename`
+- `reverter`
+- `perf`
+- `marketplace`
+- `compliance`
+- `formatters`
 
 ## diagnosticar
 
-Análise completa do repositório com todos os analistas registrados.
+Análise completa do repositório.
 
 ```bash
 prometheus diagnosticar [opções]
 ```
 
-### Flags
+Flags principais:
 
-| Flag | Tipo | Descrição |
-|---|---|---|
-| `--listar-analistas` | boolean | Lista todos os analistas que serão executados |
-| `--guardian-check` | boolean | Executa verificação do Guardian após análise |
-| `--json` | boolean | Saída em formato JSON |
-| `--json-ascii` | boolean | Saída JSON com caracteres ASCII-safe |
-| `--fast` | boolean | Modo rápido (analistas essenciais apenas) |
-| `--trust-compiler` | boolean | Confia no compilador TypeScript para certas verificações |
-| `--verify-cycles` | boolean | Verifica dependências circulares |
-| `--criar-arquetipo` | boolean | Cria arquétipo do projeto |
-| `--salvar-arquetipo` | boolean | Salva arquétipo gerado |
-| `--include <padrao>` | string | Padrão glob de inclusão |
-| `--exclude <padrao>` | string | Padrão glob de exclusão |
-| `--exclude-tests` | boolean | Exclui arquivos de teste da análise |
-| `--full` | boolean | Análise completa com todos os detalhes |
-| `--compact` | boolean | Saída compacta |
-| `--log-level <nivel>` | string | Nível de log (debug, info, warn, error) |
-| `--executive` | boolean | Modo executivo (resumo para gestão) |
-| `--auto-fix` | boolean | Aplica correções automáticas |
-| `--auto-fix-mode <modo>` | string | Modo de auto-fix (conservative, permissive) |
-| `--auto-fix-conservative` | boolean | Auto-fix apenas em casos seguros |
-| `--fix` | boolean | Alias para --auto-fix |
-| `--fix-safe` | boolean | Aplica apenas correções seguras |
-| `--show-fixes` | boolean | Mostra correções disponíveis sem aplicar |
-| `--export` | boolean | Exporta relatório para arquivo |
-| `--export-full` | boolean | Exportação completa com sharding |
-| `--export-to <dir>` | string | Diretório de exportação |
-| `--path <diretorio>` | string | Caminho(s) para projeto(s) a analisar (repetível para multi-projeto) |
+- `--listar-analistas`
+- `--guardian-check`
+- `--json`
+- `--json-ascii`
+- `--fast`
+- `--trust-compiler`
+- `--verify-cycles`
+- `--criar-arquetipo`
+- `--salvar-arquetipo`
+- `--include <padrao>`
+- `--exclude <padrao>`
+- `--exclude-tests`
+- `--full`
+- `--compact`
+- `--log-level <nivel>`
+- `--executive`
+- `--auto-fix`
+- `--auto-fix-mode <modo>`
+- `--auto-fix-conservative`
+- `--fix`
+- `--fix-safe`
+- `--show-fixes`
+- `--export`
+- `--export-full`
+- `--export-to <dir>`
+- `--path <diretorio>`
 
-### Exemplos
+Exemplos:
 
 ```bash
-# Análise padrão
-prometheus diagnosticar
-
-# Modo compacto
 prometheus diagnosticar --compact
-
-# Análise completa com Guardian
 prometheus diagnosticar --full --guardian-check
-
-# Exportar JSON para diretório customizado
 prometheus diagnosticar --json --export --export-to relatorios
-
-# Filtrar escopo
-prometheus diagnosticar --include "src/**" --exclude "**/*.test.ts"
-
-# Auto-fix conservador
+prometheus diagnosticar --include "src/**" --exclude "*****/****.test.ts"
 prometheus diagnosticar --fix-safe
-
-# Análise multi-projeto
-prometheus diagnosticar --path ./projeto-a --path ./projeto-b
-
-# Análise multi-projeto com JSON
-prometheus diagnosticar --path ./frontend --path ./backend --json
+prometheus diagnosticar --path ./projeto-a --path ./projeto-b --json
 ```
-
----
 
 ## guardian
 
-Baseline e verificação de integridade do projeto.
+Baseline e verificação de integridade.
 
 ```bash
 prometheus guardian [opções]
 ```
 
-### Flags
+Flags:
 
-| Flag | Tipo | Descrição |
-|---|---|---|
-| `--accept-baseline` | boolean | Aceita/cria baseline atual |
-| `--diff` | boolean | Mostra diferenças em relação ao baseline |
-| `--full-scan` | boolean | Verificação completa |
-| `--json` | boolean | Saída em formato JSON |
+- `--accept-baseline`
+- `--diff`
+- `--full-scan`
+- `--json`
 
-### Exemplos
+Exemplos:
 
 ```bash
-# Criar baseline inicial
 prometheus guardian --accept-baseline
-
-# Verificar mudanças
 prometheus guardian --diff
-
-# Verificação completa em JSON
-prometheus guardian --diff --json --full-scan
+prometheus guardian --diff --json
 ```
-
----
 
 ## formatar
 
@@ -146,57 +113,43 @@ Formatação interna do projeto.
 prometheus formatar [opções]
 ```
 
-### Flags
+Flags:
 
-| Flag | Tipo | Descrição |
-|---|---|---|
-| `--check` | boolean | Verifica formatação sem alterar |
-| `--write` | boolean | Aplica formatação |
-| `--engine <engine>` | string | Engine de formatação (auto, internal) |
-| `--include <padrao>` | string | Padrão glob de inclusão |
-| `--exclude <padrao>` | string | Padrão glob de exclusão |
+- `--check`
+- `--write`
+- `--engine <engine>`
+- `--include <padrao>`
+- `--exclude <padrao>`
 
-### Exemplos
+Exemplos:
 
 ```bash
-# Verificar formatação
 prometheus formatar --check
-
-# Aplicar formatação automática
 prometheus formatar --write --engine auto
 ```
 
----
-
 ## otimizar-svg
 
-Otimização de arquivos SVG.
+Otimização de SVGs usando o motor interno.
 
 ```bash
 prometheus otimizar-svg [opções]
 ```
 
-### Flags
+Flags:
 
-| Flag | Tipo | Descrição |
-|---|---|---|
-| `--dir <caminho>` | string | Diretório de SVGs |
-| `--write` | boolean | Aplica otimizações |
-| `--dry` | boolean | Preview sem alterar arquivos |
-| `--include <padrao>` | string | Padrão glob de inclusão |
-| `--exclude <padrao>` | string | Padrão glob de exclusão |
+- `--dir <caminho>`
+- `--write`
+- `--dry`
+- `--include <padrao>`
+- `--exclude <padrao>`
 
-### Exemplos
+Exemplos:
 
 ```bash
-# Preview
 prometheus otimizar-svg --dry
-
-# Otimizar diretório específico
 prometheus otimizar-svg --dir assets/icons --write
 ```
-
----
 
 ## podar
 
@@ -206,56 +159,47 @@ Remoção de arquivos órfãos e lixo do repositório.
 prometheus podar [opções]
 ```
 
-### Flags
+Flags:
 
-| Flag | Tipo | Descrição |
-|---|---|---|
-| `--force` | boolean | Remove sem confirmação |
-| `--include <padrao>` | string | Padrão glob de inclusão |
-| `--exclude <padrao>` | string | Padrão glob de exclusão |
+- `--force`
+- `--include <padrao>`
+- `--exclude <padrao>`
 
-### Exemplos
+Exemplos:
 
 ```bash
-# Listar arquivos órfãos
 prometheus podar
-
-# Forçar remoção
 prometheus podar --force
 ```
 
----
+## reestruturar
 
-## barrels
-
-Geração e organização de barrels (arquivos `index.ts`) para o projeto.
+Aplica plano de reorganização estrutural.
 
 ```bash
-prometheus barrels [opções]
+prometheus reestruturar [opções]
 ```
 
-### Flags
+Flags:
 
-| Flag | Tipo | Descrição |
-|---|---|---|
-| `--scan` | boolean | Varre o projeto e mostra quais barrels seriam criados/atualizados (dry-run) |
-| `--generate` | boolean | Cria e atualiza barrels com exports organizados |
-| `--dry-run` | boolean | Simula a operação sem modificar arquivos |
+- `--auto`
+- `--aplicar`
+- `--somente-plano`
+- `--domains`
+- `--flat`
+- `--prefer-estrategista`
+- `--preset <nome>`
+- `--categoria <pair>`
+- `--include <padrao>`
+- `--exclude <padrao>`
 
-### Exemplos
+Exemplos:
 
 ```bash
-# Preview do que seria gerado
-prometheus barrels --scan
-
-# Gerar barrels
-prometheus barrels --generate
-
-# Simular geração
-prometheus barrels --generate --dry-run
+prometheus reestruturar --somente-plano --preset prometheus
+prometheus reestruturar --auto --flat
+prometheus reestruturar --preset node-community --categoria controller=handlers
 ```
-
----
 
 ## atualizar
 
@@ -265,13 +209,9 @@ Atualização segura do Prometheus.
 prometheus atualizar [opções]
 ```
 
-### Flags
+Flags:
 
-| Flag | Tipo | Descrição |
-|---|---|---|
-| `--global` | boolean | Atualiza instalação global |
-
----
+- `--global`
 
 ## analistas
 
@@ -281,15 +221,11 @@ Lista analistas registrados e seus metadados.
 prometheus analistas [opções]
 ```
 
-### Flags
+Flags:
 
-| Flag | Tipo | Descrição |
-|---|---|---|
-| `--json` | boolean | Saída em formato JSON |
-| `--output <arquivo>` | string | Salva em arquivo |
-| `--doc <arquivo>` | string | Gera documentação |
-
----
+- `--json`
+- `--output <arquivo>`
+- `--doc <arquivo>`
 
 ## metricas
 
@@ -299,62 +235,46 @@ Consulta histórico de métricas de execução.
 prometheus metricas [opções]
 ```
 
-### Flags
+Flags:
 
-| Flag | Tipo | Descrição |
-|---|---|---|
-| `--json` | boolean | Saída em formato JSON |
-| `--limite <n>` | number | Número máximo de registros |
-| `--export <arquivo>` | string | Exporta para arquivo |
-| `--analistas` | boolean | Inclui métricas por analista |
+- `--json`
+- `--limite <n>`
+- `--export <arquivo>`
+- `--analistas`
 
-### Exemplos
+Exemplos:
 
 ```bash
-# Ver métricas
 prometheus metricas
-
-# Métricas por analista
 prometheus metricas --analistas
-
-# Exportar JSON limitado
 prometheus metricas --json --limite 20
 ```
 
----
-
 ## fix-types
 
-Detecta e corrige tipos inseguros (`any`, `unknown`).
+Detecta e corrige `any` e `unknown`.
 
 ```bash
 prometheus fix-types [opções]
 ```
 
-### Flags
+Flags:
 
-| Flag | Tipo | Descrição |
-|---|---|---|
-| `--dry-run` | boolean | Preview sem alterar |
-| `--target <path>` | string | Diretório alvo |
-| `--confidence <number>` | number | Limiar de confiança (0-100) |
-| `--verbose` | boolean | Saída detalhada |
-| `--interactive` | boolean | Modo interativo |
-| `--export` | boolean | Exporta relatório |
-| `--include <padrao>` | string | Padrão glob de inclusão |
-| `--exclude <padrao>` | string | Padrão glob de exclusão |
+- `--dry-run`
+- `--target <path>`
+- `--confidence <number>`
+- `--verbose`
+- `--interactive`
+- `--export`
+- `--include <padrao>`
+- `--exclude <padrao>`
 
-### Exemplos
+Exemplos:
 
 ```bash
-# Preview
 prometheus fix-types --dry-run
-
-# Correção com confiança mínima
 prometheus fix-types --target src --confidence 90 --verbose
 ```
-
----
 
 ## licencas
 
@@ -364,31 +284,11 @@ Ferramentas relacionadas a licenças e avisos de terceiros.
 prometheus licencas [subcomando]
 ```
 
-### Subcomandos
+Subcomandos confirmados:
 
-| Subcomando | Descrição |
-|---|---|
-| `scan` | Escaneia licenças de dependências |
-| `notices` | Gera arquivo THIRD-PARTY-NOTICES |
-| `disclaimer` | Gerencia disclaimers de proveniência |
-
-### Exemplos
-
-```bash
-# Scan de licenças
-prometheus licencas scan
-
-# Gerar notices
-prometheus licencas notices generate
-
-# Adicionar disclaimer
-prometheus licencas disclaimer add
-
-# Verificar disclaimers
-prometheus licencas disclaimer verify
-```
-
----
+- `scan`
+- `notices`
+- `disclaimer`
 
 ## names
 
@@ -398,13 +298,9 @@ Gera arquivos de mapeamento de nomes no diretório `names/`.
 prometheus names [opções]
 ```
 
-### Flags
+Flags:
 
-| Flag | Tipo | Descrição |
-|---|---|---|
-| `--legacy` | boolean | Usa formato legado |
-
----
+- `--legacy`
 
 ## rename
 
@@ -414,8 +310,6 @@ Aplica renomeações baseadas nos mapeamentos gerados por `names`.
 prometheus rename
 ```
 
----
-
 ## reverter
 
 Gerencia o mapa de reversão de moves estruturais.
@@ -424,69 +318,96 @@ Gerencia o mapa de reversão de moves estruturais.
 prometheus reverter [subcomando]
 ```
 
-### Subcomandos
+Subcomandos:
 
-| Subcomando | Descrição |
-|---|---|
-| `listar` | Lista entradas no mapa de reversão |
-| `arquivo <arquivo>` | Reverte arquivo específico |
-| `move <id>` | Reverte move por ID |
-| `limpar` | Limpa mapa de reversão |
-| `status` | Mostra status do mapa |
+- `listar`
+- `arquivo <arquivo>`
+- `move <id>`
+- `limpar`
+- `status`
 
----
+## compliance
+
+Relatórios de conformidade com frameworks de segurança (ISO 27001, SOC 2).
+
+```bash
+prometheus compliance <subcomando> [opções]
+```
+
+Subcomandos:
+
+- `list` — Lista frameworks de compliance disponíveis
+- `report <framework>` — Gera relatório de compliance para o framework
+
+Opções do `report`:
+
+- `--json` — Saída em formato JSON
+- `-o, --output <arquivo>` — Salvar em arquivo
+
+Frameworks suportados:
+
+- `iso-27001` — ISO/IEC 27001:2022 (15 controles mapeados)
+- `soc2` — SOC 2 AICPA (12 princípios de confiança mapeados)
+
+Exemplos:
+
+```bash
+prometheus compliance list
+prometheus compliance report iso-27001
+prometheus compliance report soc2 --json
+prometheus compliance report iso-27001 -o relatorio-compliance.md
+```
+
+## formatters
+
+Gerencia formatadores de relatório (plugins de saída).
+
+```bash
+prometheus formatters <subcomando> [opções]
+```
+
+Subcomandos:
+
+- `list` — Lista formatadores registrados
+- `register <nome> <caminho>` — Registra um novo formatador via caminho de módulo
+- `remove <nome>` — Remove um formatador registrado
+
+Opções do `list`:
+
+- `--json` — Saída em formato JSON
+
+Exemplos:
+
+```bash
+prometheus formatters list
+prometheus formatters list --json
+prometheus formatters register meu-exporter ./caminho/modulo.js
+prometheus formatters remove meu-exporter
+```
 
 ## perf
 
 Baseline e comparação de performance sintética.
 
 ```bash
-prometheus perf [subcomando] [opções]
+prometheus perf [opções] [subcomando]
 ```
 
-### Subcomandos
+Flags:
 
-| Subcomando | Descrição |
-|---|---|
-| `baseline` | Cria snapshot de baseline |
-| `compare` | Compara com baseline |
+- `--dir <dir>`
+- `--json`
+- `--limite <n>`
 
-### Flags
+Subcomandos:
 
-| Flag | Tipo | Descrição |
-|---|---|---|
-| `--dir <dir>` | string | Diretório de snapshots |
-| `--json` | boolean | Saída em formato JSON |
-| `--limite <n>` | number | Número máximo de comparações |
+- `baseline`
+- `compare`
 
-### Exemplos
+Exemplos:
 
 ```bash
-# Criar baseline
 prometheus perf baseline
-
-# Comparar com baseline
 prometheus perf compare
-
-# Comparação em JSON
 prometheus perf --json compare
 ```
-
----
-
-## Ajuda Geral
-
-```bash
-# Listar todos os comandos
-prometheus --help
-
-# Ajuda de comando específico
-prometheus diagnosticar --help
-prometheus guardian --help
-prometheus fix-types --help
-```
-
----
-
-**Versão:** v0.11.0
-**Última atualização:** 2026-05-28
