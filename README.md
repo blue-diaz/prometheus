@@ -71,11 +71,11 @@ prometheus corrigir --revisar
 # Aplicar correções automáticas seguras
 prometheus corrigir --auto
 
-# Estabelecer baseline de saúde
-prometheus guardian --baseline
+# Estabelecer baseline de saúde (assinatura GPG)
+prometheus guardian --accept-baseline
 
 # Verificar mudanças
-prometheus guardian --verificar
+prometheus guardian
 ```
 
 ---
@@ -105,10 +105,10 @@ prometheus diagnosticar --relatorio markdown --saida RELATORIO.md
 
 ### Passo 2: Estabelecer Baseline
 
-Crie um snapshot da saúde atual do projeto para monitorar mudanças:
+Crie um baseline criptográfico com assinaturas GPG do projeto para monitorar mudanças:
 
 ```bash
-prometheus guardian --baseline
+prometheus guardian --accept-baseline
 ```
 
 ### Passo 3: Corrigir Problemas
@@ -147,11 +147,11 @@ prometheus podar
 Mantenha a saúde do projeto ao longo do tempo:
 
 ```bash
-# Monitorar alterações
-prometheus guardian --monitorar
+# Verificar integridade contra baseline
+prometheus guardian
 
-# Verificar contra baseline
-prometheus guardian --verificar
+# Mostrar diferenças detalhadas
+prometheus guardian --diff
 
 # Comparar performance
 prometheus perf snapshot --baseline
@@ -177,7 +177,7 @@ prometheus metricas
 ### Manutenção Assistida
 
 - **Auto-fix seguro** — correções automáticas com validação (`corrigir`)
-- **Guardian** — monitoramento contínuo com baselines e verificação de integridade
+- **Guardian** — monitoramento contínuo com assinatura GPG, baselines criptográficos e verificação de integridade
 - **Reestruturação** — reorganização automática seguindo padrões arquiteturais
 - **Poda inteligente** — identificação e remoção de arquivos órfãos e código morto
 - **Fix Types** — correção automática de `any` e `unknown`
@@ -290,7 +290,7 @@ O Prometheus lê um arquivo `prometheus.config.json` na raiz do seu projeto. Se 
 | `suppress` | Supressão de avisos por regra/caminho |
 | `testPatterns` | Padrões para detecção de testes |
 | `analystsExclude` | Analistas a desabilitar |
-| `GUARDIAN_*` | Configurações do Guardian |
+| `GUARDIAN_*` | Configurações do Guardian (assinatura GPG) |
 | `REPORT_*` | Configurações de relatórios |
 | `WORKER_POOL_*` | Pool de workers paralelos |
 | `PLUGINS` | Sistema de plugins |
@@ -354,15 +354,25 @@ prometheus fix-types --dry-run       # simular correção
 prometheus fix-types --target src    # diretório alvo
 ```
 
-### Guardian (Monitoramento)
+### Guardian (Monitoramento com GPG)
+
+O Guardian utiliza **assinatura GPG** (Ed25519) em vez de hashes convencionais para garantir a integridade dos arquivos. Cada baseline armazena assinaturas criptográficas individuais, permitindo autenticação e não-repúdio.
 
 ```bash
-prometheus guardian --baseline       # criar baseline
-prometheus guardian --verificar      # verificar contra baseline
-prometheus guardian --monitorar      # modo watch contínuo
-prometheus guardian --confirmar      # confirmar mudanças
-prometheus guardian --json           # saída JSON
+prometheus guardian                   # verificar integridade
+prometheus guardian --accept-baseline # aceitar estado atual como baseline
+prometheus guardian --diff            # mostrar diferenças
+prometheus guardian --full-scan       # scan completo sem ignorar padrões
+prometheus guardian --json            # saída JSON estruturada
 ```
+
+**Como funciona:**
+1. **Chaves** — um par de chaves GPG (Ed25519) é gerado automaticamente em `.prometheus/`
+2. **Baseline** — cada arquivo é assinado com a chave privada; a assinatura é armazenada no baseline
+3. **Verificação** — a assinatura armazenada é verificada contra o conteúdo atual usando a chave pública
+4. **Drift** — arquivos adicionados, removidos ou com assinatura inválida são detectados
+
+> As chaves GPG ficam em `.prometheus/` e são automaticamente excluídas do versionamento (`.gitignore`).
 
 ### Nomes e Renomeação
 
